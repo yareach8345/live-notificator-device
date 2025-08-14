@@ -19,7 +19,7 @@ private:
     String category;
     long concurrent_user_count;
 public:
-    LiveOpen(String live_title, String category, long concurrent_user_count): live_title(live_title), category(category), concurrent_user_count(concurrent_user_count) {};
+    LiveOpen(const String &live_title, const String &category, const long &concurrent_user_count): live_title(live_title), category(category), concurrent_user_count(concurrent_user_count) {};
 
     bool get_is_open() const override;
 
