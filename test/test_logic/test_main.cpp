@@ -5,10 +5,12 @@
 
 extern void test_live_state();
 extern void test_live_state_parsing();
+extern void test_json_field_getter();
 
 int main(void) {
     UNITY_BEGIN();
     test_live_state();
     test_live_state_parsing();
-    return UNITY_END();
+    test_json_field_getter();
+    UNITY_END();
 }

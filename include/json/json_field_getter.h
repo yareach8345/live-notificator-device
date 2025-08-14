@@ -11,7 +11,7 @@
 class JsonFieldGetter {
 private:
     const JsonObjectConst &json_object;
-    const String &context;
+    const String context;
 public:
     JsonFieldGetter(const String &context, const JsonObjectConst &obj): json_object(obj), context(context) {}
 
