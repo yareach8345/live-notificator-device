@@ -4,7 +4,7 @@
 
 #ifndef LIVE_NOTIFICATOR_DEVICE_LIVE_OPEN_H
 #define LIVE_NOTIFICATOR_DEVICE_LIVE_OPEN_H
-#include "test_main.h"
+#include "live_state.h"
 
 #ifdef ESP32_ENV
 #include <WString.h>

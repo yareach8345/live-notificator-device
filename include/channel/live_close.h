@@ -4,7 +4,7 @@
 
 #ifndef LIVE_NOTIFICATOR_DEVICE_LIVE_CLOSE_H
 #define LIVE_NOTIFICATOR_DEVICE_LIVE_CLOSE_H
-#include "test_main.h"
+#include "live_state.h"
 
 class LiveClose: public LiveState {
 public:
