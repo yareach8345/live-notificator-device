@@ -53,9 +53,49 @@ void test_parse_live_state() {
     TEST_ASSERT_EQUAL(false, live_close->get_is_open());
 }
 
+void test_parsing_live_state_without_is_open_field() {
+    const String json = "{\"liveTitle\":\"test\"}";
+    JsonDocument doc = parse_json_string(json);
+
+    try {
+        parse_live_state_from_json(doc.as<JsonObjectConst>());
+        TEST_FAIL_MESSAGE("실패해야할 실행 성공함");
+    } catch (std::exception& e) {
+        TEST_ASSERT_EQUAL_STRING("LiveState 파싱 에러. isOpen을 찾을 수 없음.", e.what());
+    }
+}
+
+void test_parsing_live_close_without_required_field() {
+    const String json = "{}";
+    JsonDocument doc = parse_json_string(json);
+
+    try {
+        parse_live_close(doc.as<JsonObjectConst>());
+        TEST_FAIL_MESSAGE("실패해야할 실행 성공함");
+    } catch (std::exception& e) {
+        TEST_ASSERT_EQUAL_STRING("파싱 에러 [LiveClose]: 필드 'isOpen' 없음", e.what());
+    }
+}
+
+void test_parsing_live_open_without_required_field() {
+    //시청자 수가 빠진 JSON
+    const String json = "{\"isOpen\":true,\"liveTitle\":\"test live title\",\"category\":\"test\"}";
+    JsonDocument doc = parse_json_string(json);
+
+    try {
+        parse_live_open(doc.as<JsonObjectConst>());
+        TEST_FAIL_MESSAGE("실패해야할 실행 성공함");
+    } catch (std::exception& e) {
+        TEST_ASSERT_EQUAL_STRING("파싱 에러 [LiveOpen]: 필드 'concurrentUserCount' 없음", e.what());
+    }
+}
+
 void test_live_state_parsing() {
     RUN_TEST(test_parse_json);
     RUN_TEST(test_parse_live_close);
     RUN_TEST(test_parse_live_open);
     RUN_TEST(test_parse_live_state);
+    RUN_TEST(test_parsing_live_state_without_is_open_field);
+    RUN_TEST(test_parsing_live_close_without_required_field);
+    RUN_TEST(test_parsing_live_open_without_required_field);
 }
