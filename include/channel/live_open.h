@@ -5,21 +5,15 @@
 #ifndef LIVE_NOTIFICATOR_DEVICE_LIVE_OPEN_H
 #define LIVE_NOTIFICATOR_DEVICE_LIVE_OPEN_H
 #include "live_state.h"
-
-#ifdef ESP32_ENV
-#include <WString.h>
-#elif NATIVE_ENV
-#include <string>
-typedef std::string String;
-#endif
+#include "type/string.h"
 
 class LiveOpen: public LiveState {
 private:
     String live_title;
     String category;
-    long concurrent_user_count;
+    int concurrent_user_count;
 public:
-    LiveOpen(const String &live_title, const String &category, const long &concurrent_user_count): live_title(live_title), category(category), concurrent_user_count(concurrent_user_count) {};
+    LiveOpen(const String &live_title, const String &category, const int &concurrent_user_count): live_title(live_title), category(category), concurrent_user_count(concurrent_user_count) {};
 
     bool get_is_open() const override;
 
@@ -29,8 +23,8 @@ public:
     void set_category(const String &new_live_title);
     const String* const get_category() const;
 
-    void set_concurrent_user_count(const long &new_concurrent_user_count);
-    const long* const get_concurrent_user_count() const;
+    void set_concurrent_user_count(const int &new_concurrent_user_count);
+    const int* const get_concurrent_user_count() const;
 };
 
 #endif //LIVE_NOTIFICATOR_DEVICE_LIVE_OPEN_H

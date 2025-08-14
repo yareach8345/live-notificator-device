@@ -4,6 +4,8 @@
 
 #include "channel/live_open.h"
 
+#include <cstdio>
+
 bool LiveOpen::get_is_open() const {
     return true;
 }
@@ -24,11 +26,10 @@ const String* const LiveOpen::get_category() const {
     return &category;
 }
 
-void LiveOpen::set_concurrent_user_count(const long &new_concurrent_user_count) {
+void LiveOpen::set_concurrent_user_count(const int &new_concurrent_user_count) {
     this->concurrent_user_count = new_concurrent_user_count;
 }
 
-
-const long* const LiveOpen::get_concurrent_user_count() const {
+const int* const LiveOpen::get_concurrent_user_count() const {
     return &concurrent_user_count;
 }
