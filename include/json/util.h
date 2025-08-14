@@ -5,9 +5,12 @@
 #ifndef LIVE_NOTIFICATOR_DEVICE_JSON_H
 #define LIVE_NOTIFICATOR_DEVICE_JSON_H
 
+#include <functional>
 #include "type/string.h"
 #include "ArduinoJson.h"
 
 JsonDocument parse_json_string(const String &json);
+
+std::function<JsonVariantConst(const String&)> make_get_required_field(const String &context, const JsonObjectConst& obj);
 
 #endif //LIVE_NOTIFICATOR_DEVICE_JSON_H

@@ -4,18 +4,10 @@
 #include "channel/live_close.h"
 #include "channel/live_open.h"
 #include "error/json_parsing_fail_error.h"
-#include "util/json.h"
+#include "json/util.h"
 
 const LiveOpen* parse_live_open(const JsonObjectConst &live_open_json) {
-    const auto get_required_field = [&](const String& field_name) {
-        const JsonVariantConst field = live_open_json[field_name];
-        if (field.isNull()) {
-            throw JsonParsingFailError(
-                "파싱 에러 [LiveOpen]: 필드 '" + field_name + "' 없음"
-            );
-        }
-        return field;
-    };
+    const auto get_required_field = make_get_required_field("LiveOpen", live_open_json);
 
     if (live_open_json["isOpen"].isNull()) {
         throw JsonParsingFailError("파싱 에러 [LiveOpen]: 필드 isOpen을 찾을 수 없음.");
@@ -35,15 +27,7 @@ const LiveOpen* parse_live_open(const JsonObjectConst &live_open_json) {
 }
 
 const LiveClose* parse_live_close(const JsonObjectConst &live_close_json) {
-    const auto get_required_field = [&](const String& field_name) {
-        const JsonVariantConst field = live_close_json[field_name];
-        if (field.isNull()) {
-            throw JsonParsingFailError(
-                "파싱 에러 [LiveClose]: 필드 '" + field_name + "' 없음"
-            );
-        }
-        return field;
-    };
+    const auto get_required_field = make_get_required_field("LiveClose", live_close_json);
 
     const JsonVariantConst is_open = get_required_field("isOpen");
 

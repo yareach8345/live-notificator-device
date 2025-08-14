@@ -6,7 +6,7 @@
 #include "ArduinoJson.h"
 #include "channel/live_close.h"
 #include "type/string.h"
-#include "util/json.h"
+#include "json/util.h"
 #include "channel/parser.h"
 
 const String live_open_compact_json = "{\"channelId\":{\"id\":\"8c341b627588590585f269e69778ec93\",\"platform\":\"chzzk\"},\"detail\":{\"displayName\":\"스트리머1\",\"followerCount\":959,\"priority\":null,\"color\":\"#e7ebee\"},\"liveState\":{\"isOpen\":true,\"liveTitle\":\"test live title\",\"concurrentUserCount\":123,\"category\":\"test\"}}";
