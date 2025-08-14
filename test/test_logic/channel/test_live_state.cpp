@@ -5,13 +5,13 @@
 #include "channel/live_close.h"
 #include "channel/live_open.h"
 
-void live_close_gen() {
+void test_generate_live_close() {
     const LiveClose live_close;
 
     TEST_ASSERT_EQUAL(false, live_close.get_is_open());
 }
 
-void live_open_gen() {
+void test_generate_live_open() {
     const LiveOpen live_open("test_title", "testing", 3);
 
     TEST_ASSERT_EQUAL(true, live_open.get_is_open());
@@ -20,7 +20,7 @@ void live_open_gen() {
     TEST_ASSERT_EQUAL(3, *live_open.get_concurrent_user_count());
 }
 
-void value_in_live_open_class_change() {
+void test_value_in_live_open_class_change() {
     LiveOpen live_open("test_title", "category1", 3);
 
     const String* const category = live_open.get_category();
@@ -36,7 +36,7 @@ void value_in_live_open_class_change() {
 }
 
 void test_live_state() {
-    RUN_TEST(live_close_gen);
-    RUN_TEST(live_open_gen);
-    RUN_TEST(value_in_live_open_class_change);
+    RUN_TEST(test_generate_live_close);
+    RUN_TEST(test_generate_live_open);
+    RUN_TEST(test_value_in_live_open_class_change);
 }
