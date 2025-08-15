@@ -1,0 +1,15 @@
+//
+// Created by yareach on 25. 8. 15..
+//
+
+extern void test_channel_id();
+extern void test_live_state();
+extern void test_live_state_parsing();
+extern void test_platform();
+
+void test_channel() {
+    test_channel_id();
+    test_live_state();
+    test_live_state_parsing();
+    test_platform();
+}

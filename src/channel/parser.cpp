@@ -68,7 +68,7 @@ const ChannelId parse_channel_id(const JsonObjectConst &channel_id_json_doc) {
     try {
         const Platform platform = PlatformUtils::from_string(platform_string);
         return ChannelId(platform, id);
-    } catch (std::runtime_error& e) {
+    } catch (const std::runtime_error& e) {
         throw JsonParsingFailError(e.what());
     }
 }

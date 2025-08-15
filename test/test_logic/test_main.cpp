@@ -3,18 +3,12 @@
 //
 #include <unity.h>
 
-extern void test_channel_id();
-extern void test_live_state();
-extern void test_live_state_parsing();
-extern void test_platform();
-extern void test_json_field_getter();
+extern void test_channel();
+extern void test_json();
 
 int main(void) {
     UNITY_BEGIN();
-    test_channel_id();
-    test_live_state();
-    test_live_state_parsing();
-    test_platform();
-    test_json_field_getter();
+    test_channel();
+    test_json();
     UNITY_END();
 }
