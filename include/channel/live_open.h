@@ -18,13 +18,13 @@ public:
     bool get_is_open() const override;
 
     void set_live_title(const String &new_live_title);
-    const String* const get_live_title() const;
+    String get_live_title() const;
 
     void set_category(const String &new_live_title);
-    const String* const get_category() const;
+    String get_category() const;
 
     void set_concurrent_user_count(const int &new_concurrent_user_count);
-    const int* const get_concurrent_user_count() const;
+    long get_concurrent_user_count() const;
 };
 
 #endif //LIVE_NOTIFICATOR_DEVICE_LIVE_OPEN_H

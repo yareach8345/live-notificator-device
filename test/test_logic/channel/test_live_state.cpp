@@ -15,21 +15,19 @@ void test_generate_live_open() {
     const LiveOpen live_open("test_title", "testing", 3);
 
     TEST_ASSERT_EQUAL(true, live_open.get_is_open());
-    TEST_ASSERT_EQUAL_STRING("test_title", live_open.get_live_title()->c_str());
-    TEST_ASSERT_EQUAL_STRING("testing", live_open.get_category()->c_str());
-    TEST_ASSERT_EQUAL(3, *live_open.get_concurrent_user_count());
+    TEST_ASSERT_EQUAL_STRING("test_title", live_open.get_live_title().c_str());
+    TEST_ASSERT_EQUAL_STRING("testing", live_open.get_category().c_str());
+    TEST_ASSERT_EQUAL(3, live_open.get_concurrent_user_count());
 }
 
 void test_value_in_live_open_class_change() {
     LiveOpen live_open("test_title", "category1", 3);
 
-    const String* const category = live_open.get_category();
-
-    const String categoryBeforeChange = *category;
+    const String categoryBeforeChange = live_open.get_category();
 
     live_open.set_category("category2");
 
-    const String categoryAfterChange = *category;
+    const String categoryAfterChange = live_open.get_category();
 
     TEST_ASSERT_EQUAL_STRING("category1", categoryBeforeChange.c_str());
     TEST_ASSERT_EQUAL_STRING("category2", categoryAfterChange.c_str());

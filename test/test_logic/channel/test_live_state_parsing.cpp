@@ -37,9 +37,9 @@ void test_parse_live_open() {
     const LiveOpen* live_open = parse_live_open(live_state_object);
 
     TEST_ASSERT_EQUAL(true, live_open->get_is_open());
-    TEST_ASSERT_EQUAL(123, *live_open->get_concurrent_user_count());
-    TEST_ASSERT_EQUAL_STRING("test live title", live_open->get_live_title()->c_str());
-    TEST_ASSERT_EQUAL_STRING("test", live_open->get_category()->c_str());
+    TEST_ASSERT_EQUAL(123, live_open->get_concurrent_user_count());
+    TEST_ASSERT_EQUAL_STRING("test live title", live_open->get_live_title().c_str());
+    TEST_ASSERT_EQUAL_STRING("test", live_open->get_category().c_str());
 }
 
 void test_parse_live_state() {

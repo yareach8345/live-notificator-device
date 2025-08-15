@@ -4,11 +4,11 @@
 
 #include "channel/channel_id.h"
 
-const Platform* const ChannelId::get_platform() const {
-    return &platform;
+Platform ChannelId::get_platform() const {
+    return platform;
 }
 
 
-const String* const ChannelId::get_id() const {
-    return &id;
+String ChannelId::get_id() const {
+    return id;
 }

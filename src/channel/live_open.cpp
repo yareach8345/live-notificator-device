@@ -14,22 +14,22 @@ void LiveOpen::set_live_title(const String &new_live_title) {
     this->live_title = new_live_title;
 }
 
-const String* const LiveOpen::get_live_title() const {
-    return &live_title;
+String LiveOpen::get_live_title() const {
+    return live_title;
 }
 
 void LiveOpen::set_category(const String &new_category) {
     this->category = new_category;
 }
 
-const String* const LiveOpen::get_category() const {
-    return &category;
+String LiveOpen::get_category() const {
+    return category;
 }
 
 void LiveOpen::set_concurrent_user_count(const int &new_concurrent_user_count) {
     this->concurrent_user_count = new_concurrent_user_count;
 }
 
-const int* const LiveOpen::get_concurrent_user_count() const {
-    return &concurrent_user_count;
+long LiveOpen::get_concurrent_user_count() const {
+    return concurrent_user_count;
 }

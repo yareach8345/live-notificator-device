@@ -15,8 +15,8 @@ void test_parse_chzzk_channel_id() {
 
     const ChannelId parse_result = parse_channel_id(doc.as<JsonObjectConst>());
 
-    TEST_ASSERT_EQUAL(Platform::CHZZK, *parse_result.get_platform());
-    TEST_ASSERT_EQUAL_STRING("1234", parse_result.get_id()->c_str());
+    TEST_ASSERT_EQUAL(Platform::CHZZK, parse_result.get_platform());
+    TEST_ASSERT_EQUAL_STRING("1234", parse_result.get_id().c_str());
 }
 
 void test_parse_youtube_channel_id() {
@@ -25,8 +25,8 @@ void test_parse_youtube_channel_id() {
 
     const ChannelId parse_result = parse_channel_id(doc.as<JsonObjectConst>());
 
-    TEST_ASSERT_EQUAL(Platform::YOUTUBE, *parse_result.get_platform());
-    TEST_ASSERT_EQUAL_STRING("abc123", parse_result.get_id()->c_str());
+    TEST_ASSERT_EQUAL(Platform::YOUTUBE, parse_result.get_platform());
+    TEST_ASSERT_EQUAL_STRING("abc123", parse_result.get_id().c_str());
 }
 
 void try_parse_with_unknown_platform() {
