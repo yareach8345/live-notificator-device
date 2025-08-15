@@ -3,6 +3,7 @@
 //
 #include "channel/live_close.h"
 #include "channel/live_open.h"
+#include "channel/parser.h"
 #include "error/json_parsing_fail_error.h"
 #include "json/json_field_getter.h"
 #include "json/util.h"
