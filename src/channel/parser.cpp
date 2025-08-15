@@ -4,6 +4,8 @@
 #include "channel/live_close.h"
 #include "channel/live_open.h"
 #include "channel/parser.h"
+
+#include "channel/platform.h"
 #include "error/json_parsing_fail_error.h"
 #include "json/json_field_getter.h"
 #include "json/util.h"
@@ -55,4 +57,18 @@ const LiveState* parse_live_state_from_json(const JsonObjectConst &live_state_js
     }
 
     return parse_live_open(live_state_json_doc);
+}
+
+const ChannelId parse_channel_id(const JsonObjectConst &channel_id_json_doc) {
+    const JsonFieldGetter field_getter("ChannelId", channel_id_json_doc);
+
+    const String platform_string = field_getter.get_required_field("platform");
+    const String id = field_getter.get_required_field("id");
+
+    try {
+        const Platform platform = PlatformUtils::from_string(platform_string);
+        return ChannelId(platform, id);
+    } catch (std::runtime_error& e) {
+        throw JsonParsingFailError(e.what());
+    }
 }
