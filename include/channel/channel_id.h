@@ -15,9 +15,9 @@ private:
 public:
     ChannelId(const Platform _platform, const String& id) : platform(_platform), id(id) {}
 
-    const Platform& get_platform() const;
+    const Platform* const get_platform() const;
 
-    const String& get_id() const;
+    const String* const get_id() const;
 };
 
 #endif //LIVE_NOTIFICATOR_DEVICE_CHANNEL_ID_H
