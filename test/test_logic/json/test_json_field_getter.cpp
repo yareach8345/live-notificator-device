@@ -9,7 +9,7 @@
 #include "json/util.h"
 #include "type/string.h"
 
-const String json_string = "{\"field1\":\"value1\",\"field2\":23,\"field3\":true}";
+const String json_string = "{\"field1\":\"value1\",\"field2\":23,\"field3\":true, \"field4\":null}";
 
 const JsonDocument json = parse_json_string(json_string);
 
@@ -20,6 +20,7 @@ void test_get_field() {
     const JsonVariantConst field1 = field_getter.get_field("field1");
     const JsonVariantConst field2 = field_getter.get_field("field2");
     const JsonVariantConst field3 = field_getter.get_field("field3");
+    const JsonVariantConst field4 = field_getter.get_field("field4");
 
     // //can read null value
     const JsonVariantConst null_value = field_getter.get_field("null_value");
@@ -27,6 +28,7 @@ void test_get_field() {
     TEST_ASSERT_EQUAL_STRING("value1", field1.as<String>().c_str());
     TEST_ASSERT_EQUAL(23, field2.as<int>());
     TEST_ASSERT_EQUAL(true, field3.as<bool>());
+    TEST_ASSERT_EQUAL(true, field4.isNull());
 
     TEST_ASSERT_EQUAL(true, null_value.isNull());
 }
@@ -44,9 +46,31 @@ void test_get_required_field() {
     } catch (const JsonParsingFailError& error) {
         TEST_ASSERT_EQUAL_STRING("파싱 에러 [json]: 필드 'null_value' 없음", error.what());
     }
+
+    // 필드 값이 null일시 에러 발생 검증
+    try {
+        const JsonVariantConst null_value = field_getter.get_required_field("field4");
+        TEST_FAIL_MESSAGE("예외가 발생하지 않음");
+    } catch (const JsonParsingFailError& error) {
+        TEST_ASSERT_EQUAL_STRING("파싱 에러 [json]: 필드 'field4' 없음", error.what());
+    }
+}
+
+void test_get_optional() {
+    const JsonFieldGetter field_getter("json", json.as<JsonObjectConst>());
+
+    const optional<String> string_value = field_getter.get_field_optional<String>("field1");
+    const optional<String> string_null_value = field_getter.get_field_optional<String>("field4");
+    const optional<uint8_t> null_value = field_getter.get_field_optional<uint8_t>("null_value");
+
+    TEST_ASSERT_EQUAL(false, string_value.is_empty());
+    TEST_ASSERT_EQUAL_STRING("value1", string_value.get_value().c_str());
+    TEST_ASSERT_EQUAL(true, string_null_value.is_empty());
+    TEST_ASSERT_EQUAL(true, null_value.is_empty());
 }
 
 void test_json_field_getter() {
     RUN_TEST(test_get_field);
     RUN_TEST(test_get_required_field);
+    RUN_TEST(test_get_optional);
 }

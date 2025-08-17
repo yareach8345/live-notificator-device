@@ -7,6 +7,7 @@
 
 #include <ArduinoJson.h>
 #include "type/string.h"
+#include "type/optional.h"
 
 class JsonFieldGetter {
 private:
@@ -15,9 +16,19 @@ private:
 public:
     JsonFieldGetter(const String &context, const JsonObjectConst &obj): json_object(obj), context(context) {}
 
-    const JsonVariantConst get_field(const String &field_name) const;
+    JsonVariantConst get_field(const String &field_name) const;
 
-    const JsonVariantConst get_required_field(const String &field_name) const;
+    JsonVariantConst get_required_field(const String &field_name) const;
+
+    template<typename T>
+    optional<T> get_field_optional(const String &field_name) const {
+        const JsonVariantConst value = get_field(field_name);
+        if (value.isNull()) {
+            return optional<T>::get_null();
+        } else {
+            return optional<T>(value.as<T>());
+        }
+    }
 };
 
 #endif //LIVE_NOTIFICATOR_DEVICE_JSON_FIELD_GETTER_H
