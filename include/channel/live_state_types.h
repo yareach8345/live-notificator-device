@@ -1,0 +1,12 @@
+//
+// Created by yareach on 25. 8. 17..
+//
+
+#ifndef LIVE_NOTIFICATOR_DEVICE_LIVE_STATE_TYPES_H
+#define LIVE_NOTIFICATOR_DEVICE_LIVE_STATE_TYPES_H
+
+enum LiveStateType {
+    OPEN, CLOSE
+};
+
+#endif //LIVE_NOTIFICATOR_DEVICE_LIVE_STATE_TYPES_H

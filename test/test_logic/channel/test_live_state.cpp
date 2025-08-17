@@ -8,6 +8,7 @@
 void test_generate_live_close() {
     const LiveClose live_close;
 
+    TEST_ASSERT_EQUAL(LiveStateType::CLOSE, live_close.get_live_state_type());
     TEST_ASSERT_EQUAL(false, live_close.get_is_open());
 }
 
@@ -15,6 +16,7 @@ void test_generate_live_open() {
     const LiveOpen live_open("test_title", "testing", 3);
 
     TEST_ASSERT_EQUAL(true, live_open.get_is_open());
+    TEST_ASSERT_EQUAL(LiveStateType::OPEN, live_open.get_live_state_type());
     TEST_ASSERT_EQUAL_STRING("test_title", live_open.get_live_title().c_str());
     TEST_ASSERT_EQUAL_STRING("testing", live_open.get_category().c_str());
     TEST_ASSERT_EQUAL(3, live_open.get_concurrent_user_count());
