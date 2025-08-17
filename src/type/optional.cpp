@@ -10,6 +10,9 @@ template<>
 const uint8_t optional<uint8_t>::DEFAULT = 0;
 
 template<>
+const long optional<long>::DEFAULT = 0;
+
+template<>
 const int optional<int>::DEFAULT = 0;
 
 template<>

@@ -8,9 +8,8 @@
 #include "channel/platform.h"
 #include "error/json_parsing_fail_error.h"
 #include "json/json_field_getter.h"
-#include "json/util.h"
 
-const LiveOpen* parse_live_open(const JsonObjectConst &live_open_json) {
+LiveOpen* parse_live_open(const JsonObjectConst &live_open_json) {
     const JsonFieldGetter field_getter("LiveOpen", live_open_json);
 
     if (live_open_json["isOpen"].isNull()) {
@@ -30,7 +29,7 @@ const LiveOpen* parse_live_open(const JsonObjectConst &live_open_json) {
     return new LiveOpen(live_title, category, concurrent_user_count);
 }
 
-const LiveClose* parse_live_close(const JsonObjectConst &live_close_json) {
+LiveClose* parse_live_close(const JsonObjectConst &live_close_json) {
     const JsonFieldGetter field_getter("LiveClose", live_close_json);
 
     const JsonVariantConst is_open = field_getter.get_required_field("isOpen");
@@ -42,7 +41,7 @@ const LiveClose* parse_live_close(const JsonObjectConst &live_close_json) {
     return new LiveClose();
 }
 
-const LiveState* parse_live_state_from_json(const JsonObjectConst &live_state_json_doc) {
+LiveState* parse_live_state_from_json(const JsonObjectConst &live_state_json_doc) {
     if (live_state_json_doc.isNull()) {
         throw JsonParsingFailError("LiveState 파싱 에러.  json이 null");
     }
@@ -59,7 +58,7 @@ const LiveState* parse_live_state_from_json(const JsonObjectConst &live_state_js
     return parse_live_open(live_state_json_doc);
 }
 
-const ChannelId parse_channel_id(const JsonObjectConst &channel_id_json_doc) {
+ChannelId parse_channel_id(const JsonObjectConst &channel_id_json_doc) {
     const JsonFieldGetter field_getter("ChannelId", channel_id_json_doc);
 
     const String platform_string = field_getter.get_required_field("platform");
@@ -71,4 +70,15 @@ const ChannelId parse_channel_id(const JsonObjectConst &channel_id_json_doc) {
     } catch (const std::runtime_error& e) {
         throw JsonParsingFailError(e.what());
     }
+}
+
+ChannelDetail parse_channel_detail(const JsonObjectConst &channel_detail_json_doc) {
+    const JsonFieldGetter field_getter("ChannelDetail", channel_detail_json_doc);
+
+    const String display_name = field_getter.get_required_field("displayName");
+    const long follower_count = field_getter.get_required_field("followerCount");
+    const optional<uint8_t> priority = field_getter.get_field_optional<uint8_t>("priority");
+    const optional<String> color = field_getter.get_field_optional<String>("color");
+
+    return { display_name, follower_count, priority, color };
 }
