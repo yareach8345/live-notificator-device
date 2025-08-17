@@ -9,7 +9,7 @@
 #include "error/json_parsing_fail_error.h"
 #include "json/json_field_getter.h"
 
-LiveOpen* parse_live_open(const JsonObjectConst &live_open_json) {
+LiveOpen parse_live_open(const JsonObjectConst &live_open_json) {
     const JsonFieldGetter field_getter("LiveOpen", live_open_json);
 
     if (live_open_json["isOpen"].isNull()) {
@@ -26,10 +26,10 @@ LiveOpen* parse_live_open(const JsonObjectConst &live_open_json) {
     const String category = field_getter.get_required_field("category");
     const int concurrent_user_count = field_getter.get_required_field("concurrentUserCount");
 
-    return new LiveOpen(live_title, category, concurrent_user_count);
+    return { live_title, category, concurrent_user_count };
 }
 
-LiveClose* parse_live_close(const JsonObjectConst &live_close_json) {
+LiveClose parse_live_close(const JsonObjectConst &live_close_json) {
     const JsonFieldGetter field_getter("LiveClose", live_close_json);
 
     const JsonVariantConst is_open = field_getter.get_required_field("isOpen");
@@ -38,10 +38,10 @@ LiveClose* parse_live_close(const JsonObjectConst &live_close_json) {
         throw JsonParsingFailError("파싱 에러 [LiveClose]: 필드 isOpen이 true입니다.");
     }
 
-    return new LiveClose();
+    return {};
 }
 
-LiveState* parse_live_state_from_json(const JsonObjectConst &live_state_json_doc) {
+LiveStateVariant parse_live_state_from_json(const JsonObjectConst &live_state_json_doc) {
     if (live_state_json_doc.isNull()) {
         throw JsonParsingFailError("LiveState 파싱 에러.  json이 null");
     }
@@ -52,10 +52,12 @@ LiveState* parse_live_state_from_json(const JsonObjectConst &live_state_json_doc
     }
 
     if (!isOpen.as<bool>()) {
-        return parse_live_close(live_state_json_doc);
+        const LiveClose live_close = parse_live_close(live_state_json_doc);
+        return LiveStateVariant(live_close);
     }
 
-    return parse_live_open(live_state_json_doc);
+    const LiveOpen live_open = parse_live_open(live_state_json_doc);
+    return LiveStateVariant(live_open);
 }
 
 ChannelId parse_channel_id(const JsonObjectConst &channel_id_json_doc) {
