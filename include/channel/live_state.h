@@ -3,6 +3,8 @@
 //
 #ifndef LIVE_NOTIFICATOR_DEVICE_LIVE_STATE_H
 #define LIVE_NOTIFICATOR_DEVICE_LIVE_STATE_H
+#include <memory>
+
 #include "live_state_types.h"
 
 class LiveState {

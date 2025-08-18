@@ -13,12 +13,11 @@ const String live_close_compact_json = "{\"channelId\":{\"id\":\"vEsDwh9jsLs\",\
 
 void test_close_channel_info_parsing() {
     JsonDocument doc = parse_json_string(live_close_compact_json);
-    const ChannelInfo ci_close = parse_channel_info(doc.as<JsonObject>());
+    ChannelInfo ci_close = parse_channel_info(doc.as<JsonObject>());
 
     const ChannelId channel_id = ci_close.get_channel_id();
     const ChannelDetail detail = ci_close.get_detail();
     const LiveStateType live_state_type = ci_close.get_live_state_type();
-    const LiveClose close = ci_close.get_live_state_variant().get_live_state_by_close();
 
     TEST_ASSERT_EQUAL(YOUTUBE, channel_id.get_platform());
     TEST_ASSERT_EQUAL_STRING("vEsDwh9jsLs", channel_id.get_id().c_str());
@@ -34,12 +33,11 @@ void test_close_channel_info_parsing() {
 
 void test_open_channel_info_parsing() {
     JsonDocument doc = parse_json_string(live_open_compact_json);
-    const ChannelInfo ci_open = parse_channel_info(doc.as<JsonObject>());
+    ChannelInfo ci_open = parse_channel_info(doc.as<JsonObject>());
 
     const ChannelId channel_id = ci_open.get_channel_id();
     const ChannelDetail detail = ci_open.get_detail();
-    const LiveStateType live_state_type = ci_open.get_live_state_type();
-    const LiveOpen open = ci_open.get_live_state_variant().get_live_state_by_open();
+    LiveOpen* open = static_cast<LiveOpen*>(ci_open.get_live_state().get());
 
     TEST_ASSERT_EQUAL(CHZZK, channel_id.get_platform());
     TEST_ASSERT_EQUAL_STRING("8c341b627588590585f269e69778ec93", channel_id.get_id().c_str());
@@ -50,11 +48,12 @@ void test_open_channel_info_parsing() {
     TEST_ASSERT_EQUAL(false, detail.get_color().is_empty());
     TEST_ASSERT_EQUAL_STRING("#e7ebee", detail.get_color().get_value().c_str());
 
-    TEST_ASSERT_EQUAL(OPEN, live_state_type);
-    TEST_ASSERT_EQUAL(true, open.get_is_open());
-    TEST_ASSERT_EQUAL_STRING("test live title", open.get_live_title().c_str());
-    TEST_ASSERT_EQUAL(123, open.get_concurrent_user_count());
-    TEST_ASSERT_EQUAL_STRING("test", open.get_category().c_str());
+    TEST_ASSERT_EQUAL(OPEN, ci_open.get_live_state_type());
+    TEST_ASSERT_EQUAL(OPEN, open->get_live_state_type());
+    TEST_ASSERT_EQUAL(true, open->get_is_open());
+    TEST_ASSERT_EQUAL_STRING("test live title", open->get_live_title().c_str());
+    TEST_ASSERT_EQUAL(123, open->get_concurrent_user_count());
+    TEST_ASSERT_EQUAL_STRING("test", open->get_category().c_str());
 }
 
 void test_channel_info_parsing() {

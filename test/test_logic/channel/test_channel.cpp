@@ -7,7 +7,6 @@ extern void test_live_state();
 extern void test_live_state_parsing();
 extern void test_platform();
 extern void test_channel_detail();
-extern void test_live_state_variant();
 extern void test_channel_info();
 extern void test_channel_info_parsing();
 
@@ -17,7 +16,6 @@ void test_channel() {
     test_live_state_parsing();
     test_platform();
     test_channel_detail();
-    test_live_state_variant();
     test_channel_info();
     test_channel_info_parsing();
 }

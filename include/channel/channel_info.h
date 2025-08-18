@@ -5,17 +5,19 @@
 #ifndef LIVE_NOTIFICATOR_DEVICE_CHANNEL_INFO_H
 #define LIVE_NOTIFICATOR_DEVICE_CHANNEL_INFO_H
 
+#include <memory>
+
 #include "channel_id.h"
 #include "channel_detail.h"
-#include "live_state_variant.h"
+#include "live_state.h"
 
 class ChannelInfo {
 private:
     const ChannelId channel_id;
     ChannelDetail detail;
-    LiveStateVariant live_state_variant;
+    std::shared_ptr<LiveState> live_state;
 public:
-    ChannelInfo(const ChannelId& channel_id, const ChannelDetail& detail, const LiveStateVariant& live_state_variant);
+    ChannelInfo(const ChannelId& channel_id, const ChannelDetail& detail, const std::shared_ptr<LiveState> &live_state);
 
     ChannelId get_channel_id() const;
 
@@ -24,11 +26,8 @@ public:
     ChannelDetail *get_detail_ref();
     void set_detail(const ChannelDetail& new_detail);
 
-    LiveStateVariant get_live_state_variant() const;
-    LiveStateVariant* get_live_state_variant_ref();
-    void set_live_state_variant(const LiveStateVariant& new_live_state_variant);
-    void set_live_state(const LiveClose& live_close);
-    void set_live_state(const LiveOpen& live_open);
+    std::shared_ptr<LiveState> get_live_state();
+    void set_live_state(const std::shared_ptr<LiveState> &new_live_state);
 
     LiveStateType get_live_state_type() const;
 };

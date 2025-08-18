@@ -25,34 +25,34 @@ void test_parse_live_close() {
     JsonDocument doc = parse_json_string(live_close_compact_json);
     const JsonObjectConst live_state_object = doc["liveState"].as<JsonObjectConst>();
 
-    const LiveClose live_close = parse_live_close(live_state_object);
+    const std::shared_ptr<LiveClose> live_close = parse_live_close(live_state_object);
 
-    TEST_ASSERT_EQUAL(false, live_close.get_is_open());
+    TEST_ASSERT_EQUAL(false, live_close->get_is_open());
 }
 
 void test_parse_live_open() {
     JsonDocument doc = parse_json_string(live_open_compact_json);
     const JsonObjectConst live_state_object = doc["liveState"].as<JsonObjectConst>();
 
-    const LiveOpen live_open = parse_live_open(live_state_object);
+    const std::shared_ptr<LiveOpen> live_open = parse_live_open(live_state_object);
 
-    TEST_ASSERT_EQUAL(true, live_open.get_is_open());
-    TEST_ASSERT_EQUAL(123, live_open.get_concurrent_user_count());
-    TEST_ASSERT_EQUAL_STRING("test live title", live_open.get_live_title().c_str());
-    TEST_ASSERT_EQUAL_STRING("test", live_open.get_category().c_str());
+    TEST_ASSERT_EQUAL(true, live_open->get_is_open());
+    TEST_ASSERT_EQUAL(123, live_open->get_concurrent_user_count());
+    TEST_ASSERT_EQUAL_STRING("test live title", live_open->get_live_title().c_str());
+    TEST_ASSERT_EQUAL_STRING("test", live_open->get_category().c_str());
 }
 
 void test_parse_live_state() {
     JsonDocument live_close_doc = parse_json_string(live_close_compact_json);
     JsonDocument live_open_doc = parse_json_string(live_open_compact_json);
 
-    const LiveStateVariant live_close = parse_live_state(live_close_doc["liveState"].as<JsonObjectConst>());
-    const LiveStateVariant live_open = parse_live_state(live_open_doc["liveState"].as<JsonObjectConst>());
+    const std::shared_ptr<LiveState> live_close = parse_live_state(live_close_doc["liveState"].as<JsonObjectConst>());
+    const std::shared_ptr<LiveState> live_open = parse_live_state(live_open_doc["liveState"].as<JsonObjectConst>());
 
-    TEST_ASSERT_EQUAL(OPEN, live_open.get_live_state_type());
-    TEST_ASSERT_EQUAL(true, live_open.is_open());
-    TEST_ASSERT_EQUAL(CLOSE, live_close.get_live_state_type());
-    TEST_ASSERT_EQUAL(false, live_close.is_open());
+    TEST_ASSERT_EQUAL(OPEN, live_open->get_live_state_type());
+    TEST_ASSERT_EQUAL(true, live_open->get_is_open());
+    TEST_ASSERT_EQUAL(CLOSE, live_close->get_live_state_type());
+    TEST_ASSERT_EQUAL(false, live_close->get_is_open());
 }
 
 void test_parsing_live_state_without_is_open_field() {

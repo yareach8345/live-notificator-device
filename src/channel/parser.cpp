@@ -10,7 +10,7 @@
 #include "error/json_parsing_fail_error.h"
 #include "json/json_field_getter.h"
 
-LiveOpen parse_live_open(const JsonObjectConst &live_open_json) {
+std::shared_ptr<LiveOpen> parse_live_open(const JsonObjectConst &live_open_json) {
     const JsonFieldGetter field_getter("LiveOpen", live_open_json);
 
     if (live_open_json["isOpen"].isNull()) {
@@ -27,10 +27,10 @@ LiveOpen parse_live_open(const JsonObjectConst &live_open_json) {
     const String category = field_getter.get_required_field("category");
     const int concurrent_user_count = field_getter.get_required_field("concurrentUserCount");
 
-    return { live_title, category, concurrent_user_count };
+    return std::make_shared<LiveOpen>( live_title, category, concurrent_user_count );
 }
 
-LiveClose parse_live_close(const JsonObjectConst &live_close_json) {
+std::shared_ptr<LiveClose> parse_live_close(const JsonObjectConst &live_close_json) {
     const JsonFieldGetter field_getter("LiveClose", live_close_json);
 
     const JsonVariantConst is_open = field_getter.get_required_field("isOpen");
@@ -39,10 +39,10 @@ LiveClose parse_live_close(const JsonObjectConst &live_close_json) {
         throw JsonParsingFailError("파싱 에러 [LiveClose]: 필드 isOpen이 true입니다.");
     }
 
-    return {};
+    return std::make_shared<LiveClose>();
 }
 
-LiveStateVariant parse_live_state(const JsonObjectConst &live_state_json_doc) {
+std::shared_ptr<LiveState> parse_live_state(const JsonObjectConst &live_state_json_doc) {
     if (live_state_json_doc.isNull()) {
         throw JsonParsingFailError("LiveState 파싱 에러.  json이 null");
     }
@@ -53,12 +53,10 @@ LiveStateVariant parse_live_state(const JsonObjectConst &live_state_json_doc) {
     }
 
     if (!isOpen.as<bool>()) {
-        const LiveClose live_close = parse_live_close(live_state_json_doc);
-        return LiveStateVariant(live_close);
+        return parse_live_close(live_state_json_doc);
     }
 
-    const LiveOpen live_open = parse_live_open(live_state_json_doc);
-    return LiveStateVariant(live_open);
+    return parse_live_open(live_state_json_doc);
 }
 
 ChannelId parse_channel_id(const JsonObjectConst &channel_id_json_doc) {
@@ -69,7 +67,7 @@ ChannelId parse_channel_id(const JsonObjectConst &channel_id_json_doc) {
 
     try {
         const Platform platform = PlatformUtils::from_string(platform_string);
-        return ChannelId(platform, id);
+        return { platform, id };
     } catch (const std::runtime_error& e) {
         throw JsonParsingFailError(e.what());
     }
@@ -78,7 +76,7 @@ ChannelId parse_channel_id(const JsonObjectConst &channel_id_json_doc) {
 ChannelDetail parse_channel_detail(const JsonObjectConst &channel_detail_json_doc) {
     const JsonFieldGetter field_getter("ChannelDetail", channel_detail_json_doc);
 
-    const String display_name = field_getter.get_required_field("displayName");
+    const String display_name = field_getter.get_required_field("displayName").as<String>().c_str();
     const long follower_count = field_getter.get_required_field("followerCount");
     const optional<uint8_t> priority = field_getter.get_field_optional<uint8_t>("priority");
     const optional<String> color = field_getter.get_field_optional<String>("color");
@@ -95,7 +93,7 @@ ChannelInfo parse_channel_info(const JsonObjectConst &channel_info_json_doc) {
 
     const ChannelId channel_id = parse_channel_id(channel_id_obj);
     const ChannelDetail channel_detail = parse_channel_detail(channel_detail_obj);
-    const LiveStateVariant live_state = parse_live_state(live_state_obj);
+    const std::shared_ptr<LiveState> live_state = parse_live_state(live_state_obj);
 
     return { channel_id, channel_detail, live_state };
 }
