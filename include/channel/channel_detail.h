@@ -8,6 +8,7 @@
 #define LIVE_NOTIFICATOR_DEVICE_CHANNEL_DETAIL_H
 
 #include <cstdint>
+#include <utility>
 #include "type/string.h"
 #include "type/optional.h"
 
@@ -18,7 +19,7 @@ private:
     optional<uint8_t> priority;
     optional<String> color;
 public:
-    ChannelDetail(const String& display_name, long follower_count, const optional<uint8_t> &priority, const optional<String> &color): display_name(display_name), follower_count(follower_count), priority(priority), color(color) {}
+    ChannelDetail(String display_name, const long follower_count, const optional<uint8_t> &priority, const optional<String> &color): display_name(std::move(display_name)), follower_count(follower_count), priority(priority), color(color) {}
 
     String get_display_name() const;
     void set_display_name(const String& new_display_name);

@@ -3,6 +3,8 @@
 //
 
 #include "channel/channel_info.h"
+#include <memory>
+#include "channel/live_close.h"
 
 ChannelInfo::ChannelInfo(const ChannelId &channel_id, const ChannelDetail &detail, const std::shared_ptr<LiveState> &live_state): channel_id(channel_id), detail(detail), live_state(live_state) {}
 
