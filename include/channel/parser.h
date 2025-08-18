@@ -11,15 +11,18 @@
 #include <ArduinoJson.h>
 #include "channel_detail.h"
 #include "channel_id.h"
+#include "channel_info.h"
 
 LiveOpen parse_live_open(const JsonObjectConst &live_open_json);
 
 LiveClose parse_live_close(const JsonObjectConst &live_close_json);
 
-LiveStateVariant parse_live_state_from_json(const JsonObjectConst &live_state_json_doc);
+LiveStateVariant parse_live_state(const JsonObjectConst &live_state_json_doc);
 
 ChannelId parse_channel_id(const JsonObjectConst &channel_id_json_doc);
 
 ChannelDetail parse_channel_detail(const JsonObjectConst &channel_detail_json_doc);
+
+ChannelInfo parse_channel_info(const JsonObjectConst &channel_info_json_doc);
 
 #endif //LIVE_NOTIFICATOR_DEVICE_UTIL_H

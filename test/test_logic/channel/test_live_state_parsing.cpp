@@ -46,8 +46,8 @@ void test_parse_live_state() {
     JsonDocument live_close_doc = parse_json_string(live_close_compact_json);
     JsonDocument live_open_doc = parse_json_string(live_open_compact_json);
 
-    const LiveStateVariant live_close = parse_live_state_from_json(live_close_doc["liveState"].as<JsonObjectConst>());
-    const LiveStateVariant live_open = parse_live_state_from_json(live_open_doc["liveState"].as<JsonObjectConst>());
+    const LiveStateVariant live_close = parse_live_state(live_close_doc["liveState"].as<JsonObjectConst>());
+    const LiveStateVariant live_open = parse_live_state(live_open_doc["liveState"].as<JsonObjectConst>());
 
     TEST_ASSERT_EQUAL(OPEN, live_open.get_live_state_type());
     TEST_ASSERT_EQUAL(true, live_open.is_open());
@@ -60,7 +60,7 @@ void test_parsing_live_state_without_is_open_field() {
     JsonDocument doc = parse_json_string(json);
 
     try {
-        parse_live_state_from_json(doc.as<JsonObjectConst>());
+        parse_live_state(doc.as<JsonObjectConst>());
         TEST_FAIL_MESSAGE("실패해야할 실행 성공함");
     } catch (std::exception& e) {
         TEST_ASSERT_EQUAL_STRING("LiveState 파싱 에러. isOpen을 찾을 수 없음.", e.what());

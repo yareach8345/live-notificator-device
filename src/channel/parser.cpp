@@ -5,6 +5,7 @@
 #include "channel/live_open.h"
 #include "channel/parser.h"
 
+#include "channel/channel_info.h"
 #include "channel/platform.h"
 #include "error/json_parsing_fail_error.h"
 #include "json/json_field_getter.h"
@@ -41,7 +42,7 @@ LiveClose parse_live_close(const JsonObjectConst &live_close_json) {
     return {};
 }
 
-LiveStateVariant parse_live_state_from_json(const JsonObjectConst &live_state_json_doc) {
+LiveStateVariant parse_live_state(const JsonObjectConst &live_state_json_doc) {
     if (live_state_json_doc.isNull()) {
         throw JsonParsingFailError("LiveState 파싱 에러.  json이 null");
     }
@@ -83,4 +84,18 @@ ChannelDetail parse_channel_detail(const JsonObjectConst &channel_detail_json_do
     const optional<String> color = field_getter.get_field_optional<String>("color");
 
     return { display_name, follower_count, priority, color };
+}
+
+ChannelInfo parse_channel_info(const JsonObjectConst &channel_info_json_doc) {
+    const JsonFieldGetter field_getter("ChannelInfo", channel_info_json_doc);
+
+    const JsonObjectConst channel_id_obj = field_getter.get_required_field("channelId");
+    const JsonObjectConst channel_detail_obj = field_getter.get_required_field("detail");
+    const JsonObjectConst live_state_obj = field_getter.get_required_field("liveState");
+
+    const ChannelId channel_id = parse_channel_id(channel_id_obj);
+    const ChannelDetail channel_detail = parse_channel_detail(channel_detail_obj);
+    const LiveStateVariant live_state = parse_live_state(live_state_obj);
+
+    return { channel_id, channel_detail, live_state };
 }

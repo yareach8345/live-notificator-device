@@ -17,10 +17,12 @@ private:
     };
     LiveStateType live_state_type;
 public:
-    explicit LiveStateVariant(const LiveOpen &live_open);
-    explicit LiveStateVariant(const LiveClose &live_close);
+    LiveStateVariant(const LiveOpen &live_open);
+    LiveStateVariant(const LiveClose &live_close);
     LiveStateVariant(const LiveStateVariant& other);
     ~LiveStateVariant();
+
+    LiveStateVariant& operator=(const LiveStateVariant& rhs);
 
     void set_live_state(const LiveOpen& live_open);
 
@@ -28,7 +30,11 @@ public:
 
     LiveOpen get_live_state_by_open() const;
 
+    LiveOpen* get_live_state_by_open_ref();
+
     LiveClose get_live_state_by_close() const;
+
+    LiveClose* get_live_state_by_close_ref();
 
     LiveStateType get_live_state_type() const;
 

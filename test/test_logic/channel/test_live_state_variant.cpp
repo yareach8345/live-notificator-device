@@ -76,10 +76,27 @@ void test_change_live_state_from_close_to_open() {
     TEST_ASSERT_EQUAL(123, state.get_live_state_by_open().get_concurrent_user_count());
 }
 
+void test_change_live_state_with_equal_operator() {
+    LiveStateVariant state1{ LiveClose() };
+
+    LiveStateType live_state_type_before_change = state1.get_live_state_type();
+
+    LiveStateVariant state2(LiveOpen("testing", "test", 123));
+    state1 = state2;
+
+    TEST_ASSERT_EQUAL(CLOSE, live_state_type_before_change);
+
+    TEST_ASSERT_EQUAL(OPEN, state1.get_live_state_type());
+    TEST_ASSERT_EQUAL_STRING("testing", state1.get_live_state_by_open().get_live_title().c_str());
+    TEST_ASSERT_EQUAL_STRING("test", state1.get_live_state_by_open().get_category().c_str());
+    TEST_ASSERT_EQUAL(123, state1.get_live_state_by_open().get_concurrent_user_count());
+}
+
 void test_live_state_variant() {
     RUN_TEST(test_generate_live_state_variant_bye_close);
     RUN_TEST(test_generate_live_state_variant_by_open);
     RUN_TEST(test_change_live_state_from_open_to_open);
     RUN_TEST(test_change_live_state_from_open_to_close);
     RUN_TEST(test_change_live_state_from_close_to_open);
+    RUN_TEST(test_change_live_state_with_equal_operator);
 }
