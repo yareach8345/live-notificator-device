@@ -27,10 +27,10 @@ std::string generate_default_value_mismatch_message(const T expected, const T ac
 }
 
 void test_null() {
-    optional<int> opt = optional<int>();
+    const optional<int> opt = optional<int>();
 
-    TEST_ASSERT_EQUAL(optional<int>::DEFAULT, opt.get_value_unsafe());
-    TEST_ASSERT_EQUAL(optional<int>::DEFAULT, opt.get_value_or_default());
+    TEST_ASSERT_EQUAL(optional<int>::get_default(), opt.get_value_unsafe());
+    TEST_ASSERT_EQUAL(optional<int>::get_default(), opt.get_value_or_default());
     TEST_ASSERT_EQUAL(true, opt.is_empty());
 
     try {
@@ -97,8 +97,8 @@ void test_set_value_from_null() {
     int_optional.set_value(1);
     const optional<int> after_set = int_optional;
 
-    TEST_ASSERT_EQUAL(optional<int>::DEFAULT, before_set.get_value_unsafe());
-    TEST_ASSERT_EQUAL(optional<int>::DEFAULT, before_set.get_value_or_default());
+    TEST_ASSERT_EQUAL(optional<int>::get_default(), before_set.get_value_unsafe());
+    TEST_ASSERT_EQUAL(optional<int>::get_default(), before_set.get_value_or_default());
     TEST_ASSERT_EQUAL(true, before_set.is_empty());
     TEST_ASSERT_EQUAL(1, after_set.get_value());
     TEST_ASSERT_EQUAL(false, after_set.is_empty());
@@ -116,7 +116,7 @@ void test_set_value_to_null() {
     TEST_ASSERT_EQUAL(1, before_set.get_value_or_default());
     TEST_ASSERT_EQUAL(false, before_set.is_empty());
     TEST_ASSERT_EQUAL(true, after_set.is_empty());
-    TEST_ASSERT_EQUAL(optional<int>::DEFAULT, after_set.get_value_or_default());
+    TEST_ASSERT_EQUAL(optional<int>::get_default(), after_set.get_value_or_default());
 }
 
 void test_optional_type() {

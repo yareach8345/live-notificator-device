@@ -15,9 +15,9 @@ private:
 public:
     optional(const T& value): _value(value), _is_empty(false) {}
 
-    optional(): _value(DEFAULT), _is_empty(true) {}
+    optional(): _value(get_default()), _is_empty(true) {}
 
-    static const T DEFAULT;
+    static T get_default();
 
     static optional<T> create(const T& value) {
         return optional<T>(value);
@@ -45,7 +45,7 @@ public:
     }
 
     T get_value_or_default() const {
-        return this->_is_empty ? DEFAULT : this->_value;
+        return this->_is_empty ? get_default(): this->_value;
     }
 
     T get_value_unsafe() const {

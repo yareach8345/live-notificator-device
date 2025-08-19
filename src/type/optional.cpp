@@ -7,16 +7,16 @@
 #include <cstdint>
 
 template<>
-const uint8_t optional<uint8_t>::DEFAULT = 0;
+unsigned char optional<unsigned char>::get_default() { return 0; }
 
 template<>
-const long optional<long>::DEFAULT = 0;
+long optional<long>::get_default() { return 0; }
 
 template<>
-const int optional<int>::DEFAULT = 0;
+int optional<int>::get_default() { return 0; }
 
 template<>
-const String optional<String>::DEFAULT = "";
+String optional<String>::get_default() { return ""; }
 
 template<>
-const bool optional<bool>::DEFAULT = false;
+bool optional<bool>::get_default() { return false; }
