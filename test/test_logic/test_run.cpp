@@ -9,7 +9,7 @@ extern void test_type();
 extern void test_mqtt();
 extern void test_string();
 
-int main(void) {
+void test_run() {
     UNITY_BEGIN();
     test_channel();
     test_json();
