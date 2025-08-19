@@ -3,9 +3,10 @@
 //
 
 #include <unity.h>
-#include "type/optional.h"
-#include "type/string.h"
 #include <sstream>
+#include "type/optional.h"
+#include "type/byte.h"
+#include "type/string.h"
 
 template<typename T>
 std::string generate_default_value_mismatch_message(const T expected, const T actual) {
@@ -50,7 +51,7 @@ void test_get_value() {
 }
 
 void test_optional_create() {
-    const optional<uint8_t> byte_optional = optional<uint8_t>::create(42);
+    const optional<byte> byte_optional = optional<byte>::create(42);
     TEST_ASSERT_EQUAL(42, byte_optional.get_value());
     TEST_ASSERT_EQUAL(42, byte_optional.get_value_or_default());
     TEST_ASSERT_EQUAL(false, byte_optional.is_empty());
@@ -66,12 +67,12 @@ void test_null_generate() {
 
 void test_default_values() {
     const optional<int> int_optional = optional<int>::get_null();
-    const optional<uint8_t> uint8_t_optional = optional<uint8_t>::get_null();
+    const optional<byte> byte_optional = optional<byte>::get_null();
     const optional<bool> bool_optional = optional<bool>::get_null();
     const optional<String> string_optional = optional<String>::get_null();
 
     TEST_ASSERT_EQUAL_MESSAGE(0, int_optional.get_value_unsafe(), generate_default_value_mismatch_message(0, int_optional.get_value_unsafe(), "int").c_str());
-    TEST_ASSERT_EQUAL_MESSAGE(0, uint8_t_optional.get_value_unsafe(), generate_default_value_mismatch_message<int>(0, uint8_t_optional.get_value_unsafe(), "uint8_t").c_str());
+    TEST_ASSERT_EQUAL_MESSAGE(0, byte_optional.get_value_unsafe(), generate_default_value_mismatch_message<int>(0, byte_optional.get_value_unsafe(), "byte").c_str());
     TEST_ASSERT_EQUAL_MESSAGE(false, bool_optional.get_value_unsafe(), generate_default_value_mismatch_message(false, bool_optional.get_value_unsafe(), "bool").c_str());
     TEST_ASSERT_EQUAL_STRING_MESSAGE("", string_optional.get_value_unsafe().c_str(), generate_default_value_mismatch_message<String>("\"\" (an empty string)", string_optional.get_value_unsafe(), "String").c_str());
 }

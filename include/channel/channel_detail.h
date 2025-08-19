@@ -11,15 +11,16 @@
 #include <utility>
 #include "type/string.h"
 #include "type/optional.h"
+#include "type/byte.h"
 
 class ChannelDetail {
 private:
     String display_name;
     long follower_count;
-    optional<uint8_t> priority;
+    optional<byte> priority;
     optional<String> color;
 public:
-    ChannelDetail(String display_name, const long follower_count, const optional<uint8_t> &priority, const optional<String> &color): display_name(std::move(display_name)), follower_count(follower_count), priority(priority), color(color) {}
+    ChannelDetail(String display_name, const long follower_count, const optional<byte> &priority, const optional<String> &color): display_name(std::move(display_name)), follower_count(follower_count), priority(priority), color(color) {}
 
     String get_display_name() const;
     void set_display_name(const String& new_display_name);
@@ -27,9 +28,9 @@ public:
     long get_follower_count() const;
     void set_follower_count(const long& new_follower_count);
 
-    optional<uint8_t> get_priority() const;
+    optional<byte> get_priority() const;
     bool is_priority_empty() const;
-    void set_priority(const uint8_t new_priority);
+    void set_priority(byte new_priority);
     void set_priority_to_null();
 
     optional<String> get_color() const;

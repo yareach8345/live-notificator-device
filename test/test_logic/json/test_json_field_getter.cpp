@@ -6,8 +6,9 @@
 
 #include "error/json_parsing_fail_error.h"
 #include "json/json_field_getter.h"
-#include "json/util.h"
+#include "type/byte.h"
 #include "type/string.h"
+#include "json/util.h"
 
 const String json_string = "{\"field1\":\"value1\",\"field2\":23,\"field3\":true, \"field4\":null}";
 
@@ -61,7 +62,7 @@ void test_get_optional() {
 
     const optional<String> string_value = field_getter.get_field_optional<String>("field1");
     const optional<String> string_null_value = field_getter.get_field_optional<String>("field4");
-    const optional<uint8_t> null_value = field_getter.get_field_optional<uint8_t>("null_value");
+    const optional<byte> null_value = field_getter.get_field_optional<byte>("null_value");
 
     TEST_ASSERT_EQUAL(false, string_value.is_empty());
     TEST_ASSERT_EQUAL_STRING("value1", string_value.get_value().c_str());

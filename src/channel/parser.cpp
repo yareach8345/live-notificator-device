@@ -78,7 +78,7 @@ ChannelDetail parse_channel_detail(const JsonObjectConst &channel_detail_json_do
 
     const String display_name = field_getter.get_required_field("displayName").as<String>().c_str();
     const long follower_count = field_getter.get_required_field("followerCount");
-    const optional<uint8_t> priority = field_getter.get_field_optional<uint8_t>("priority");
+    const optional<byte> priority = field_getter.get_field_optional<byte>("priority");
     const optional<String> color = field_getter.get_field_optional<String>("color");
 
     return { display_name, follower_count, priority, color };

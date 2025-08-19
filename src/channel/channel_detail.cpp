@@ -12,11 +12,11 @@ long ChannelDetail::get_follower_count() const { return follower_count; }
 
 void ChannelDetail::set_follower_count(const long& new_follower_count) { this->follower_count = new_follower_count; }
 
-optional<uint8_t> ChannelDetail::get_priority() const { return priority; }
+optional<byte> ChannelDetail::get_priority() const { return priority; }
 
 bool ChannelDetail::is_priority_empty() const { return priority.is_empty(); }
 
-void ChannelDetail::set_priority(const uint8_t new_priority) { this->priority.set_value(new_priority); }
+void ChannelDetail::set_priority(const byte new_priority) { this->priority.set_value(new_priority); }
 
 void ChannelDetail::set_priority_to_null() { this->priority.set_value_to_null(); }
 

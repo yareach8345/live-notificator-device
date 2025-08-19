@@ -8,7 +8,7 @@
 #include "channel/parser.h"
 #include "json/util.h"
 
-const ChannelDetail channel_detail("test_name", 13, optional<uint8_t>(1), optional<String>("#ffffff"));
+const ChannelDetail channel_detail("test_name", 13, optional<byte>(1), optional<String>("#ffffff"));
 
 void test_channel_get_value() {
     const ChannelDetail det = channel_detail;
