@@ -7,6 +7,7 @@ extern void test_channel();
 extern void test_json();
 extern void test_type();
 extern void test_mqtt();
+extern void test_string();
 
 int main(void) {
     UNITY_BEGIN();
@@ -14,5 +15,6 @@ int main(void) {
     test_json();
     test_type();
     test_mqtt();
+    test_string();
     UNITY_END();
 }
