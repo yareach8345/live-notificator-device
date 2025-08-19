@@ -6,11 +6,11 @@
 #define LIVE_NOTIFICATOR_DEVICE_CHANNEL_STATE_CHANGED_MESSAGE_H
 
 #include "type/string.h"
-#include "mqtt_message.h"
+#include "message_base.h"
 #include "channel/channel_id.h"
 #include "../channel_state.h"
 
-class ChannelStateChangedMessage final : public MqttMessage {
+class ChannelStateChangedMessage final : public MessageBase {
 private:
     const ChannelId channel_id;
     const ChannelState new_state;

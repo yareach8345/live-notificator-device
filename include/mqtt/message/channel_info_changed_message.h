@@ -6,11 +6,11 @@
 #define LIVE_NOTIFICATOR_DEVICE_CHANNEL_INFO_CHANGED_MESSAGE_H
 
 #include "type/string.h"
-#include "mqtt_message.h"
+#include "message_base.h"
 #include "ArduinoJson.h"
 #include "channel/channel_id.h"
 
-class ChannelInfoChangedMessage final : MqttMessage {
+class ChannelInfoChangedMessage final : MessageBase {
 private:
     const ChannelId channel_id;
     const JsonDocument updates;

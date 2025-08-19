@@ -6,9 +6,9 @@
 #define LIVE_NOTIFICATOR_DEVICE_UPDATED_MESSAGE_H
 
 #include "../message_type.h"
-#include "mqtt_message.h"
+#include "message_base.h"
 
-class UpdatedMessage final : public MqttMessage {
+class UpdatedMessage final : public MessageBase {
 public:
     MessageType get_message_type() const override;
 };

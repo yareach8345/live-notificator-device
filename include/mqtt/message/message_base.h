@@ -7,9 +7,9 @@
 
 #include "../message_type.h"
 
-class MqttMessage {
+class MessageBase {
 public:
-    virtual ~MqttMessage() = default;
+    virtual ~MessageBase() = default;
 
     virtual MessageType get_message_type() const = 0;
 };

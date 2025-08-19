@@ -4,10 +4,10 @@
 
 #ifndef LIVE_NOTIFICATOR_DEVICE_CHANNEL_IMAGE_CHANGED_MESSAGE_H
 #define LIVE_NOTIFICATOR_DEVICE_CHANNEL_IMAGE_CHANGED_MESSAGE_H
-#include "mqtt_message.h"
+#include "message_base.h"
 #include "channel/channel_id.h"
 
-class ChannelImageChangedMessage final : public MqttMessage {
+class ChannelImageChangedMessage final : public MessageBase {
 private:
     ChannelId channel_id;
 public:
