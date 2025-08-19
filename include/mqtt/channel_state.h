@@ -1,0 +1,12 @@
+//
+// Created by yareach on 25. 8. 18..
+//
+
+#ifndef LIVE_NOTIFICATOR_DEVICE_CHANNEL_STATE_H
+#define LIVE_NOTIFICATOR_DEVICE_CHANNEL_STATE_H
+
+enum ChannelState {
+    OPEN, CLOSE, ADDED, DELETED
+};
+
+#endif //LIVE_NOTIFICATOR_DEVICE_CHANNEL_STATE_H

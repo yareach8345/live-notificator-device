@@ -13,9 +13,9 @@
 class ChannelInfoChangedMessage final : MqttMessage {
 private:
     const ChannelId channel_id;
-    const JsonObjectConst updates;
+    const JsonDocument updates;
 public:
-    ChannelInfoChangedMessage(const ChannelId& channel_id, const JsonObjectConst& updates);
+    ChannelInfoChangedMessage(const ChannelId& channel_id, const JsonDocument& updates_json);
 
     MessageType get_message_type() const override;
 

@@ -4,13 +4,13 @@
 
 #include "mqtt/message/channel_state_changed_message.h"
 
-ChannelStateChangedMessage::ChannelStateChangedMessage(const ChannelId &channel_id, const String &new_state) : channel_id(channel_id), new_state(new_state) {}
+ChannelStateChangedMessage::ChannelStateChangedMessage(const ChannelId &channel_id, const ChannelState new_state) : channel_id(channel_id), new_state(new_state) {}
 
 ChannelId ChannelStateChangedMessage::get_channel_id() const {
     return channel_id;
 }
 
-String ChannelStateChangedMessage::get_new_state() const {
+ChannelState ChannelStateChangedMessage::get_new_state() const {
     return new_state;
 }
 
