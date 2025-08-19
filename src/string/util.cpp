@@ -6,7 +6,7 @@
 
 std::vector<String> split(String str, char delimiter) {
     std::vector<String> tokens;
-    String temp;
+    String temp = "";
 
     if (str.length() == 0) {
         return std::move(tokens);
@@ -15,7 +15,7 @@ std::vector<String> split(String str, char delimiter) {
     for (size_t index = 0; index <= str.length(); index++) {
         if (str[index] == delimiter || index == str.length()) {
             tokens.push_back(std::move(temp));
-            temp.clear();
+            temp = "";
         } else {
             temp += str[index];
         }
