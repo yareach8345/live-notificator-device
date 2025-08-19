@@ -2,8 +2,10 @@
 // Created by yareach on 25. 8. 19..
 //
 
+#include <exception>
 #include <unity.h>
 
+#include "error/bad_topic_error.h"
 #include "mqtt/topic.h"
 
 const String refreshed_topic = "chzzk-notification/refreshed-at";
@@ -37,10 +39,28 @@ void test_parse_channel_image_changed_message() {
     TEST_ASSERT_EQUAL(IMAGE_CHANGED, result);
 }
 
+void test_get_channel_id_from_topic() {
+    const ChannelId result = get_channel_id_from_topic(channel_info_changed_topic);
+
+    TEST_ASSERT_EQUAL(CHZZK, result.get_platform());
+    TEST_ASSERT_EQUAL_STRING("afff6e3cc8c1487bc4135bc896811dcc", result.get_id().c_str());
+}
+
+void test_get_channel_id_from_topic_by_not_supported_topic() {
+    try {
+        const ChannelId result = get_channel_id_from_topic(refreshed_topic);
+        TEST_FAIL_MESSAGE("unexcepted success");
+    } catch (const BadTopicError& e) {
+        TEST_ASSERT_EQUAL_STRING("토픽 'chzzk-notification/refreshed-at'은 유효하지 않습니다. 채널에 관련된 메시지의 토픽만 channel id를 가져올 수 있습니다.", e.what());
+    }
+}
+
 void test_topic_parsing() {
     RUN_TEST(test_parse_refresh_message);
     RUN_TEST(test_parse_updated_message);
     RUN_TEST(test_parse_channel_info_changed_message);
     RUN_TEST(test_parse_channel_state_changed_message);
     RUN_TEST(test_parse_channel_image_changed_message);
+    RUN_TEST(test_get_channel_id_from_topic);
+    RUN_TEST(test_get_channel_id_from_topic_by_not_supported_topic);
 }

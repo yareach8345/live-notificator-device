@@ -3,6 +3,8 @@
 //
 
 #include "mqtt/topic.h"
+
+#include "channel/channel_id.h"
 #include "error/bad_topic_error.h"
 #include "string/util.h"
 
@@ -65,4 +67,19 @@ MessageType get_message_type_from_topic(const String& topic) {
     }
 
     throw BadTopicError("토픽 '" + topic + "'은 유효하지 않습니다. '" + split_topic[1] + "'은 지원 되는 이벤트 타입이 아닙니다.");
+}
+
+ChannelId get_channel_id_from_topic(const String& topic) {
+    const MessageType message_type = get_message_type_from_topic(topic);
+
+    if (message_type != INFO_CHANGED && message_type != STATE_CHANGED && message_type != IMAGE_CHANGED) {
+        throw BadTopicError("토픽 '" + topic + "'은 유효하지 않습니다. 채널에 관련된 메시지의 토픽만 channel id를 가져올 수 있습니다.");
+    }
+
+    const std::vector<String> split_topic = split(topic, '/');
+
+    const String& platform = split_topic[2];
+    const String& id = split_topic[3];
+
+    return { PlatformUtils::from_string(platform), id };
 }
