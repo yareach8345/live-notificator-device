@@ -7,20 +7,20 @@
 
 #include "channel/channel_info.h"
 #include "channel/platform.h"
-#include "error/json_parsing_fail_error.h"
+#include "error/parsing_fail_error.h"
 #include "json/json_field_getter.h"
 
 std::shared_ptr<LiveOpen> parse_live_open(const JsonObjectConst &live_open_json) {
     const JsonFieldGetter field_getter("LiveOpen", live_open_json);
 
     if (live_open_json["isOpen"].isNull()) {
-        throw JsonParsingFailError("파싱 에러 [LiveOpen]: 필드 isOpen을 찾을 수 없음.");
+        throw ParsingFailError("파싱 에러 [LiveOpen]: 필드 isOpen을 찾을 수 없음.");
     }
 
     const JsonVariantConst is_open = field_getter.get_required_field("isOpen");
 
     if (is_open.as<bool>() == false) {
-        throw JsonParsingFailError("파싱 에러 [LiveOpen]: 필드 isOpen이 false입니다.");
+        throw ParsingFailError("파싱 에러 [LiveOpen]: 필드 isOpen이 false입니다.");
     }
 
     const String live_title = field_getter.get_required_field("liveTitle");
@@ -36,7 +36,7 @@ std::shared_ptr<LiveClose> parse_live_close(const JsonObjectConst &live_close_js
     const JsonVariantConst is_open = field_getter.get_required_field("isOpen");
 
     if (is_open.as<bool>() == true) {
-        throw JsonParsingFailError("파싱 에러 [LiveClose]: 필드 isOpen이 true입니다.");
+        throw ParsingFailError("파싱 에러 [LiveClose]: 필드 isOpen이 true입니다.");
     }
 
     return std::make_shared<LiveClose>();
@@ -44,12 +44,12 @@ std::shared_ptr<LiveClose> parse_live_close(const JsonObjectConst &live_close_js
 
 std::shared_ptr<LiveState> parse_live_state(const JsonObjectConst &live_state_json_doc) {
     if (live_state_json_doc.isNull()) {
-        throw JsonParsingFailError("LiveState 파싱 에러.  json이 null");
+        throw ParsingFailError("LiveState 파싱 에러.  json이 null");
     }
 
     const JsonVariantConst isOpen = live_state_json_doc["isOpen"];
     if (isOpen.isNull()) {
-        throw JsonParsingFailError("LiveState 파싱 에러. isOpen을 찾을 수 없음.");
+        throw ParsingFailError("LiveState 파싱 에러. isOpen을 찾을 수 없음.");
     }
 
     if (!isOpen.as<bool>()) {
@@ -69,7 +69,7 @@ ChannelId parse_channel_id(const JsonObjectConst &channel_id_json_doc) {
         const Platform platform = PlatformUtils::from_string(platform_string);
         return { platform, id };
     } catch (const std::runtime_error& e) {
-        throw JsonParsingFailError(e.what());
+        throw ParsingFailError(e.what());
     }
 }
 

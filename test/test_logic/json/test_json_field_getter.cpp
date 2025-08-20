@@ -4,10 +4,9 @@
 
 #include <unity.h>
 
-#include "error/json_parsing_fail_error.h"
+#include "error/parsing_fail_error.h"
 #include "json/json_field_getter.h"
 #include "type/byte.h"
-#include "type/string.h"
 #include "json/util.h"
 
 const String json_string = "{\"field1\":\"value1\",\"field2\":23,\"field3\":true, \"field4\":null}";
@@ -44,7 +43,7 @@ void test_get_required_field() {
     try {
         const JsonVariantConst null_value = field_getter.get_required_field("null_value");
         TEST_FAIL_MESSAGE("예외가 발생하지 않음");
-    } catch (const JsonParsingFailError& error) {
+    } catch (const ParsingFailError& error) {
         TEST_ASSERT_EQUAL_STRING("파싱 에러 [json]: 필드 'null_value' 없음", error.what());
     }
 
@@ -52,7 +51,7 @@ void test_get_required_field() {
     try {
         const JsonVariantConst null_value = field_getter.get_required_field("field4");
         TEST_FAIL_MESSAGE("예외가 발생하지 않음");
-    } catch (const JsonParsingFailError& error) {
+    } catch (const ParsingFailError& error) {
         TEST_ASSERT_EQUAL_STRING("파싱 에러 [json]: 필드 'field4' 없음", error.what());
     }
 }

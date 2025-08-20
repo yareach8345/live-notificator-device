@@ -29,7 +29,7 @@ void test_transform_from_unknown_platform() {
 
         TEST_FAIL_MESSAGE("Unexpected success");
     } catch (const std::runtime_error& error) {
-        TEST_ASSERT_EQUAL_STRING("[String to Platform 과정의 에러] unknown 플랫폼은 지원되지 않습니다.", error.what());
+        TEST_ASSERT_EQUAL_STRING("Platform 파싱 실패. 문자열 'unknown'는 Platform으로 파싱될 수 없습니다.", error.what());
     }
 }
 

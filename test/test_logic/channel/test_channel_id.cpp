@@ -6,7 +6,7 @@
 
 #include "ArduinoJson.h"
 #include "channel/parser.h"
-#include "error/json_parsing_fail_error.h"
+#include "error/parsing_fail_error.h"
 #include "json/util.h"
 
 void test_parse_chzzk_channel_id() {
@@ -36,8 +36,8 @@ void try_parse_with_unknown_platform() {
     try {
         const ChannelId parse_result = parse_channel_id(doc.as<JsonObjectConst>());
         TEST_FAIL_MESSAGE("Unexpected success");
-    } catch (const JsonParsingFailError& error) {
-        TEST_ASSERT_EQUAL_STRING("[String to Platform 과정의 에러] unknown 플랫폼은 지원되지 않습니다.", error.what());
+    } catch (const ParsingFailError& error) {
+        TEST_ASSERT_EQUAL_STRING("Platform 파싱 실패. 문자열 'unknown'는 Platform으로 파싱될 수 없습니다.", error.what());
     }
 }
 

@@ -5,7 +5,7 @@
 #include "channel/platform.h"
 #include <stdexcept>
 
-#include "error/json_parsing_fail_error.h"
+#include "error/parsing_fail_error.h"
 
 String PlatformUtils::to_string(const Platform platform) {
     switch (platform) {
@@ -26,5 +26,5 @@ Platform PlatformUtils::from_string(const String& platform) {
         return YOUTUBE;
     }
 
-    throw std::runtime_error(("[String to Platform 과정의 에러] " + platform + " 플랫폼은 지원되지 않습니다.").c_str());
+    throw ParsingFailError("Platform 파싱 실패. 문자열 '" + platform + "'는 Platform으로 파싱될 수 없습니다.");
 }
