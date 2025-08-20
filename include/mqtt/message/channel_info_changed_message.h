@@ -10,7 +10,7 @@
 #include "ArduinoJson.h"
 #include "channel/channel_id.h"
 
-class ChannelInfoChangedMessage final : MessageBase {
+class ChannelInfoChangedMessage final : public MessageBase {
 private:
     const ChannelId channel_id;
     const JsonDocument updates;
