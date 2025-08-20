@@ -120,6 +120,14 @@ void test_set_value_to_null() {
     TEST_ASSERT_EQUAL(optional<int>::get_default(), after_set.get_value_or_default());
 }
 
+void test_get_value_or() {
+    const optional<int> int_optional1 = optional<int>(1);
+    const optional<int> int_optional2 = optional<int>::get_null();
+
+    TEST_ASSERT_EQUAL(1, int_optional1.get_value_or(2));
+    TEST_ASSERT_EQUAL(2, int_optional2.get_value_or(2));
+}
+
 void test_optional_type() {
     RUN_TEST(test_null);
     RUN_TEST(test_get_value);
@@ -129,4 +137,5 @@ void test_optional_type() {
     RUN_TEST(test_set_value);
     RUN_TEST(test_set_value_from_null);
     RUN_TEST(test_set_value_to_null);
+    RUN_TEST(test_get_value_or);
 }

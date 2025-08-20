@@ -48,6 +48,10 @@ public:
         return this->_is_empty ? get_default(): this->_value;
     }
 
+    T get_value_or(const T& default_value) const {
+        return this->_is_empty ? default_value: this->_value;
+    }
+
     T get_value_unsafe() const {
         return this->_value;
     }
