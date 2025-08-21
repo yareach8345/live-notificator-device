@@ -11,6 +11,7 @@ extern void test_channel_info();
 extern void test_channel_info_parsing();
 extern void test_channel_info_cmp();
 extern void test_util();
+extern void test_channel_store();
 
 void test_channel() {
     test_channel_id();
@@ -22,4 +23,5 @@ void test_channel() {
     test_channel_info_parsing();
     test_channel_info_cmp();
     test_util();
+    test_channel_store();
 }
