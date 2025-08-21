@@ -75,7 +75,12 @@ std::vector<std::shared_ptr<ChannelInfo>> ChannelStore::get_sorted_channel_list(
     return result;
 }
 
-void ChannelStore::update_channel(const ChannelId &channel_id, const JsonObjectConst &updates) {
+void ChannelStore::update_channel_info(const ChannelId &channel_id, const JsonObjectConst &updates) {
+    //todo : 업데이트 로직 작성하기
+    this->is_need_update_list = true;
+}
+
+void ChannelStore::update_channel_state(const ChannelId &channel_id, const LiveStateType &new_state) {
     //todo : 업데이트 로직 작성하기
     this->is_need_update_list = true;
 }

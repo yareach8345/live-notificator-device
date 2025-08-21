@@ -26,7 +26,8 @@ public:
     explicit ChannelStore(std::vector<ChannelInfo> channels);
     void add_channel(const ChannelInfo &channel_info);
     void delete_channel(const ChannelId &channel_id);
-    void update_channel(const ChannelId &channel_id, const JsonObjectConst &updates);
+    void update_channel_info(const ChannelId &channel_id, const JsonObjectConst &updates);
+    void update_channel_state(const ChannelId &channel_id, const LiveStateType &new_state);
     size_t get_number_of_channels() const;
     size_t get_number_of_open_channels();
     size_t get_number_of_close_channels();
