@@ -9,6 +9,7 @@ extern void test_platform();
 extern void test_channel_detail();
 extern void test_channel_info();
 extern void test_channel_info_parsing();
+extern void test_channel_info_cmp();
 
 void test_channel() {
     test_channel_id();
@@ -18,4 +19,5 @@ void test_channel() {
     test_channel_detail();
     test_channel_info();
     test_channel_info_parsing();
+    test_channel_info_cmp();
 }
