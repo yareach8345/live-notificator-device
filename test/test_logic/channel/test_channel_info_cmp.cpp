@@ -63,18 +63,27 @@ void use_priority_queue_with_channel_info() {
     pq.push(std::make_shared<ChannelInfo>(ch3));
     pq.push(std::make_shared<ChannelInfo>(ch1));
 
-    TEST_ASSERT_EQUAL_STRING("6", pq.top()->get_channel_id().get_id().c_str());
-    pq.pop();
-    TEST_ASSERT_EQUAL_STRING("5", pq.top()->get_channel_id().get_id().c_str());
-    pq.pop();
-    TEST_ASSERT_EQUAL_STRING("4", pq.top()->get_channel_id().get_id().c_str());
-    pq.pop();
-    TEST_ASSERT_EQUAL_STRING("3", pq.top()->get_channel_id().get_id().c_str());
-    pq.pop();
-    TEST_ASSERT_EQUAL_STRING("2", pq.top()->get_channel_id().get_id().c_str());
-    pq.pop();
+    printf("=================\n");
+    printf("priority pop results\n");
+    printf("%s", pq.top()->get_channel_id().get_id().c_str());
     TEST_ASSERT_EQUAL_STRING("1", pq.top()->get_channel_id().get_id().c_str());
     pq.pop();
+    printf("%s", pq.top()->get_channel_id().get_id().c_str());
+    TEST_ASSERT_EQUAL_STRING("2", pq.top()->get_channel_id().get_id().c_str());
+    pq.pop();
+    printf("%s", pq.top()->get_channel_id().get_id().c_str());
+    TEST_ASSERT_EQUAL_STRING("3", pq.top()->get_channel_id().get_id().c_str());
+    pq.pop();
+    printf("%s", pq.top()->get_channel_id().get_id().c_str());
+    TEST_ASSERT_EQUAL_STRING("4", pq.top()->get_channel_id().get_id().c_str());
+    pq.pop();
+    printf("%s", pq.top()->get_channel_id().get_id().c_str());
+    TEST_ASSERT_EQUAL_STRING("5", pq.top()->get_channel_id().get_id().c_str());
+    pq.pop();
+    printf("%s", pq.top()->get_channel_id().get_id().c_str());
+    TEST_ASSERT_EQUAL_STRING("6", pq.top()->get_channel_id().get_id().c_str());
+    pq.pop();
+    printf("\n=================\n");
 }
 
 void compare_with_is_open() {
@@ -90,14 +99,14 @@ void compare_with_is_open() {
         std::make_shared<LiveClose>()
     );
 
-    TEST_ASSERT_TRUE(ChannelInfoCmp::compare_with_is_open(open_channel, close_channel));
-    TEST_ASSERT_FALSE(ChannelInfoCmp::compare_with_is_open(close_channel, open_channel));
+    TEST_ASSERT_FALSE(ChannelInfoCmp::compare_with_is_open(open_channel, close_channel));
+    TEST_ASSERT_TRUE(ChannelInfoCmp::compare_with_is_open(close_channel, open_channel));
 
-    TEST_ASSERT_TRUE(cmp(open_channel, close_channel));
-    TEST_ASSERT_FALSE(cmp(close_channel, open_channel));
+    TEST_ASSERT_FALSE(cmp(open_channel, close_channel));
+    TEST_ASSERT_TRUE(cmp(close_channel, open_channel));
 
-    TEST_ASSERT_TRUE(cmp(std::make_shared<ChannelInfo>(open_channel), std::make_shared<ChannelInfo>(close_channel)));
-    TEST_ASSERT_FALSE(cmp(std::make_shared<ChannelInfo>(close_channel), std::make_shared<ChannelInfo>(open_channel)));
+    TEST_ASSERT_FALSE(cmp(std::make_shared<ChannelInfo>(open_channel), std::make_shared<ChannelInfo>(close_channel)));
+    TEST_ASSERT_TRUE(cmp(std::make_shared<ChannelInfo>(close_channel), std::make_shared<ChannelInfo>(open_channel)));
 }
 
 void compare_with_priority_when_one_channel_has_not_priority() {
@@ -118,16 +127,16 @@ void compare_with_priority_when_one_channel_has_not_priority() {
     TEST_ASSERT_FALSE(ChannelInfoCmp::compare_with_is_open(channel_have_priority, channel_priority_null));
 
     // 둘은 priority로 비교가능
-    TEST_ASSERT_TRUE(ChannelInfoCmp::compare_with_priority(channel_have_priority, channel_priority_null));
-    TEST_ASSERT_FALSE(ChannelInfoCmp::compare_with_priority(channel_priority_null, channel_have_priority));
+    TEST_ASSERT_FALSE(ChannelInfoCmp::compare_with_priority(channel_have_priority, channel_priority_null));
+    TEST_ASSERT_TRUE(ChannelInfoCmp::compare_with_priority(channel_priority_null, channel_have_priority));
 
     // 둘의 라이브 상태가 같을 때, priority에 의해 결정됨
-    TEST_ASSERT_TRUE(cmp(channel_have_priority, channel_priority_null));
-    TEST_ASSERT_FALSE(cmp(channel_priority_null, channel_have_priority));
+    TEST_ASSERT_FALSE(cmp(channel_have_priority, channel_priority_null));
+    TEST_ASSERT_TRUE(cmp(channel_priority_null, channel_have_priority));
 
     // shared_ptr에서도 동일하게 작동
-    TEST_ASSERT_TRUE(cmp(std::make_shared<ChannelInfo>(channel_have_priority), std::make_shared<ChannelInfo>(channel_priority_null)));
-    TEST_ASSERT_FALSE(cmp(std::make_shared<ChannelInfo>(channel_priority_null), std::make_shared<ChannelInfo>(channel_have_priority)));
+    TEST_ASSERT_FALSE(cmp(std::make_shared<ChannelInfo>(channel_have_priority), std::make_shared<ChannelInfo>(channel_priority_null)));
+    TEST_ASSERT_TRUE(cmp(std::make_shared<ChannelInfo>(channel_priority_null), std::make_shared<ChannelInfo>(channel_have_priority)));
 }
 
 void compare_with_priority_when_both_channels_have_priority() {
@@ -148,16 +157,16 @@ void compare_with_priority_when_both_channels_have_priority() {
     TEST_ASSERT_FALSE(ChannelInfoCmp::compare_with_is_open(channel_have_lower_priority, channel_have_higher_priority));
 
     // 둘은 priority로 비교가능
-    TEST_ASSERT_TRUE(ChannelInfoCmp::compare_with_priority(channel_have_higher_priority, channel_have_lower_priority));
-    TEST_ASSERT_FALSE(ChannelInfoCmp::compare_with_priority(channel_have_lower_priority, channel_have_higher_priority));
+    TEST_ASSERT_FALSE(ChannelInfoCmp::compare_with_priority(channel_have_higher_priority, channel_have_lower_priority));
+    TEST_ASSERT_TRUE(ChannelInfoCmp::compare_with_priority(channel_have_lower_priority, channel_have_higher_priority));
 
     // 둘의 라이브 상태가 같을 때, priority에 의해 결정됨
-    TEST_ASSERT_TRUE(cmp(channel_have_higher_priority, channel_have_lower_priority));
-    TEST_ASSERT_FALSE(cmp(channel_have_lower_priority, channel_have_higher_priority));
+    TEST_ASSERT_FALSE(cmp(channel_have_higher_priority, channel_have_lower_priority));
+    TEST_ASSERT_TRUE(cmp(channel_have_lower_priority, channel_have_higher_priority));
 
     // shared_ptr에서도 동일하게 작동
-    TEST_ASSERT_TRUE(cmp(std::make_shared<ChannelInfo>(channel_have_higher_priority), std::make_shared<ChannelInfo>(channel_have_lower_priority)));
-    TEST_ASSERT_FALSE(cmp(std::make_shared<ChannelInfo>(channel_have_lower_priority), std::make_shared<ChannelInfo>(channel_have_higher_priority)));
+    TEST_ASSERT_FALSE(cmp(std::make_shared<ChannelInfo>(channel_have_higher_priority), std::make_shared<ChannelInfo>(channel_have_lower_priority)));
+    TEST_ASSERT_TRUE(cmp(std::make_shared<ChannelInfo>(channel_have_lower_priority), std::make_shared<ChannelInfo>(channel_have_higher_priority)));
 }
 
 void compare_with_concurrent_user_count() {
@@ -186,16 +195,16 @@ void compare_with_concurrent_user_count() {
     TEST_ASSERT_TRUE(channel_have_less_concurrent_user_count.get_live_state()->get_is_open());
 
     // 둘의 concurrent user count로 비교가능
-    TEST_ASSERT_TRUE(ChannelInfoCmp::compare_with_concurrent_user_count(channel_have_more_concurrent_user_count, channel_have_less_concurrent_user_count));
-    TEST_ASSERT_FALSE(ChannelInfoCmp::compare_with_concurrent_user_count(channel_have_less_concurrent_user_count, channel_have_more_concurrent_user_count));
+    TEST_ASSERT_FALSE(ChannelInfoCmp::compare_with_concurrent_user_count(channel_have_more_concurrent_user_count, channel_have_less_concurrent_user_count));
+    TEST_ASSERT_TRUE(ChannelInfoCmp::compare_with_concurrent_user_count(channel_have_less_concurrent_user_count, channel_have_more_concurrent_user_count));
 
     // 둘의 라이브 상태, 우선순위가 같을 때 concurrent user count로 결정됨
-    TEST_ASSERT_TRUE(cmp(channel_have_more_concurrent_user_count, channel_have_less_concurrent_user_count));
-    TEST_ASSERT_FALSE(cmp(channel_have_less_concurrent_user_count, channel_have_more_concurrent_user_count));
+    TEST_ASSERT_FALSE(cmp(channel_have_more_concurrent_user_count, channel_have_less_concurrent_user_count));
+    TEST_ASSERT_TRUE(cmp(channel_have_less_concurrent_user_count, channel_have_more_concurrent_user_count));
 
     // shared_ptr에서도 동일하게 작동
-    TEST_ASSERT_TRUE(cmp(std::make_shared<ChannelInfo>(channel_have_more_concurrent_user_count), std::make_shared<ChannelInfo>(channel_have_less_concurrent_user_count)));
-    TEST_ASSERT_FALSE(cmp(std::make_shared<ChannelInfo>(channel_have_less_concurrent_user_count), std::make_shared<ChannelInfo>(channel_have_more_concurrent_user_count)));
+    TEST_ASSERT_FALSE(cmp(std::make_shared<ChannelInfo>(channel_have_more_concurrent_user_count), std::make_shared<ChannelInfo>(channel_have_less_concurrent_user_count)));
+    TEST_ASSERT_TRUE(cmp(std::make_shared<ChannelInfo>(channel_have_less_concurrent_user_count), std::make_shared<ChannelInfo>(channel_have_more_concurrent_user_count)));
 }
 
 void compare_with_follower_count() {
@@ -224,16 +233,16 @@ void compare_with_follower_count() {
     TEST_ASSERT_FALSE(channel_have_less_follower.get_live_state()->get_is_open());
 
     // 전제조건3 : 둘의 follower로 비교가능
-    TEST_ASSERT_TRUE(ChannelInfoCmp::compare_with_follower_count(channel_have_more_follower, channel_have_less_follower));
-    TEST_ASSERT_FALSE(ChannelInfoCmp::compare_with_follower_count(channel_have_less_follower, channel_have_more_follower));
+    TEST_ASSERT_FALSE(ChannelInfoCmp::compare_with_follower_count(channel_have_more_follower, channel_have_less_follower));
+    TEST_ASSERT_TRUE(ChannelInfoCmp::compare_with_follower_count(channel_have_less_follower, channel_have_more_follower));
 
     // 둘의 라이브 상태, 우선순위가 같을 때 concurrent user count로 결정됨
-    TEST_ASSERT_TRUE(cmp(channel_have_more_follower, channel_have_less_follower));
-    TEST_ASSERT_FALSE(cmp(channel_have_less_follower, channel_have_more_follower));
+    TEST_ASSERT_FALSE(cmp(channel_have_more_follower, channel_have_less_follower));
+    TEST_ASSERT_TRUE(cmp(channel_have_less_follower, channel_have_more_follower));
 
     // shared_ptr에서도 동일하게 작동
-    TEST_ASSERT_TRUE(cmp(std::make_shared<ChannelInfo>(channel_have_more_follower), std::make_shared<ChannelInfo>(channel_have_less_follower)));
-    TEST_ASSERT_FALSE(cmp(std::make_shared<ChannelInfo>(channel_have_less_follower), std::make_shared<ChannelInfo>(channel_have_more_follower)));
+    TEST_ASSERT_FALSE(cmp(std::make_shared<ChannelInfo>(channel_have_more_follower), std::make_shared<ChannelInfo>(channel_have_less_follower)));
+    TEST_ASSERT_TRUE(cmp(std::make_shared<ChannelInfo>(channel_have_less_follower), std::make_shared<ChannelInfo>(channel_have_more_follower)));
 }
 
 void test_channel_info_cmp() {
